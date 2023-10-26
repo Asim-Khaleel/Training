@@ -1,4 +1,4 @@
-const linkToPortfolioPage = '../Task1/Task1.html';
+const linkToPortfolioPage = '../Portfolio/Portfolio.html';
 const nameErrorMessage = "Name is required.";
 const emailErrorMessage = "Email is required and must contain '@'.";
 const passwordErrorMessage = "Password must have at least 8 characters.";
