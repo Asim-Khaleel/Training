@@ -1,13 +1,12 @@
-const linkToPortfolioPage = '../Portfolio/Portfolio.html';
+const LinkToPortfolioPage = '../Portfolio/Portfolio.html';
 const nameErrorMessage = "Name is required.";
 const emailErrorMessage = "Email is required and must contain '@'.";
 const passwordErrorMessage = "Password must have at least 8 characters.";
 const registrationSuccessMessage = "Registration successful \u{1F603}";
 
-const goBackButton = document.getElementById("goBackButton");
-goBackButton.addEventListener("click", function () {
-  window.location.href = linkToPortfolioPage;
-});
+function redirectToPortfolioPage() {
+  window.location.href = LinkToPortfolioPage;
+}
 
 function validateForm() {
   const name = document.getElementById("name").value;

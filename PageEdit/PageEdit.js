@@ -1,7 +1,7 @@
-const linkToPortfolioPage = "../Portfolio/Portfolio.html";
+const LinkToPortfolioPage = "../Portfolio/Portfolio.html";
 
 function redirectToPortfolioPage() {
-  window.location.href = linkToPortfolioPage;
+  window.location.href = LinkToPortfolioPage;
 }
 
   const addExperienceButton = document.getElementById("addExperienceButton");
@@ -18,11 +18,6 @@ function redirectToPortfolioPage() {
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
     const description = document.getElementById("description").value;
-
-    if (companyName === "" || startDate === "" || endDate === "" || description === "") {
-      alert("Please fill in all fields.");
-      return;
-  }
 
     const experienceEntry = document.createElement("div");
     experienceEntry.classList.add("experience-entry");

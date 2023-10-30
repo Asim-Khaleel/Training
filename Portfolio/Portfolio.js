@@ -1,10 +1,10 @@
-const linkToSignupPage = "../Signup/Signup.html";
-const linkToEditPage = "../PageEdit/PageEdit.html";
+const LinkToSignupPage = "../Signup/Signup.html";
+const LinkToEditPage = "../PageEdit/PageEdit.html";
 
 function redirectToSignupPage() {
-  window.location.href = linkToSignupPage;
+  window.location.href = LinkToSignupPage;
 }
 
 function redirectToEditPage() {
-  window.location.href = linkToEditPage;
+  window.location.href = LinkToEditPage;
 }
