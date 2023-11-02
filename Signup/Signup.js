@@ -1,11 +1,11 @@
-const LinkToPortfolioPage = '../Portfolio/Portfolio.html';
+const LINK_TO_PORTFOLIOPAGE = '../Portfolio/Portfolio.html';
 const nameErrorMessage = "Name is required.";
 const emailErrorMessage = "Email is required and must contain '@'.";
 const passwordErrorMessage = "Password must have at least 8 characters.";
 const registrationSuccessMessage = "Registration successful \u{1F603}";
 
 function redirectToPortfolioPage() {
-  window.location.href = LinkToPortfolioPage;
+  window.location.href = LINK_TO_PORTFOLIOPAGE;
 }
 
 function validateForm() {

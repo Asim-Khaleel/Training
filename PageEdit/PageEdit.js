@@ -1,7 +1,7 @@
-const LinkToPortfolioPage = "../Portfolio/Portfolio.html";
+const LINK_TO_PORTFOLIOPAGE = "../Portfolio/Portfolio.html";
 
 function redirectToPortfolioPage() {
-  window.location.href = LinkToPortfolioPage;
+  window.location.href = LINK_TO_PORTFOLIOPAGE;
 }
 
 const addExperienceButton = document.getElementById("addExperienceButton");
@@ -20,8 +20,6 @@ function displayExperienceData() {
   experienceEntries.innerHTML = "";
   experienceData.forEach((experience) => {
     const experienceEntry = document.createElement("div");
-    experienceEntry.classList.add("experience-entry");
-    experienceEntry.style.margin = "10px 0px";
     experienceEntry.innerHTML = `
       <div><strong>${experience.companyName}</strong></div>
       <div><strong>${experience.startDate} - ${experience.endDate}</strong></div>
