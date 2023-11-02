@@ -6,18 +6,17 @@ function redirectToSignupPage() {
 }
 
 function redirectToEditPage() {
-  window.location.href = LinkToEditPage;
+  window.location.href = LINK_TO_EDITPAGE;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Retrieve experience data from local storage
+
   const experienceData = JSON.parse(localStorage.getItem("experienceData"));
 
-  // Check if there's data and display it
   if (experienceData && experienceData.length > 0) {
     const experienceElement = document.querySelector(".experience");
 
-    // Create and append new experience entries
+
     experienceData.map((experience) => {
       const experienceEntry = document.createElement("div");
       experienceEntry.style.margin = "10px";

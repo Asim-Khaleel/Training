@@ -39,6 +39,11 @@ saveExperienceButton.addEventListener("click", () => {
   const endDate = document.getElementById("endDate").value;
   const description = document.getElementById("description").value;
 
+  if (companyName === "" || startDate === "" || endDate === "" || description === "") {
+    alert("Please fill in all fields.");
+    return;
+}
+
   const experienceEntry = {
     companyName,
     startDate,
