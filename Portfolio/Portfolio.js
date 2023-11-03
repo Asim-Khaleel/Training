@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (experienceData && experienceData.length > 0) {
     const experienceElement = document.querySelector(".experience");
 
-
     experienceData.map((experience) => {
       const experienceEntry = document.createElement("div");
       experienceEntry.style.margin = "10px";

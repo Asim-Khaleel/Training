@@ -9,7 +9,6 @@ const experienceForm = document.getElementById("experienceForm");
 const saveExperienceButton = document.getElementById("saveExperienceButton");
 const experienceEntries = document.getElementById("experienceEntries");
 
-
 let experienceData = JSON.parse(localStorage.getItem("experienceData")) || [];
 
 function saveToLocalStorage() {
@@ -17,8 +16,7 @@ function saveToLocalStorage() {
 }
 
 function displayExperienceData() {
-  experienceEntries.innerHTML = "";
-  experienceData.forEach((experience) => {
+  experienceData.map((experience) => {
     const experienceEntry = document.createElement("div");
     experienceEntry.innerHTML = `
       <div><strong>${experience.companyName}</strong></div>
@@ -39,10 +37,15 @@ saveExperienceButton.addEventListener("click", () => {
   const endDate = document.getElementById("endDate").value;
   const description = document.getElementById("description").value;
 
-  if (companyName === "" || startDate === "" || endDate === "" || description === "") {
+  if (
+    companyName === "" ||
+    startDate === "" ||
+    endDate === "" ||
+    description === ""
+  ) {
     alert("Please fill in all fields.");
     return;
-}
+  }
 
   const experienceEntry = {
     companyName,
@@ -53,8 +56,6 @@ saveExperienceButton.addEventListener("click", () => {
 
   experienceData.push(experienceEntry);
   saveToLocalStorage();
-
-  displayExperienceData();
 
   experienceForm.reset();
   experienceForm.style.display = "none";
