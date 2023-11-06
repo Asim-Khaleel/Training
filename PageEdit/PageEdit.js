@@ -4,31 +4,61 @@ function redirectToPortfolioPage() {
   window.location.href = LINK_TO_PORTFOLIOPAGE;
 }
 
-  const addExperienceButton = document.getElementById("addExperienceButton");
-  const experienceForm = document.getElementById("experienceForm");
-  const saveExperienceButton = document.getElementById("saveExperienceButton");
-  const experienceEntries = document.getElementById("experienceEntries");
+const addExperienceButton = document.getElementById("addExperienceButton");
+const experienceForm = document.getElementById("experienceForm");
+const saveExperienceButton = document.getElementById("saveExperienceButton");
+const experienceEntries = document.getElementById("experienceEntries");
 
-  addExperienceButton.addEventListener("click", () => {
-    experienceForm.style.display = "flex";
-  });
+let experienceData = JSON.parse(localStorage.getItem("experienceData")) || [];
 
-  saveExperienceButton.addEventListener("click", () => {
-    const companyName = document.getElementById("companyName").value;
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-    const description = document.getElementById("description").value;
+function saveToLocalStorage() {
+  localStorage.setItem("experienceData", JSON.stringify(experienceData));
+}
 
+function displayExperienceData() {
+  experienceData.map((experience) => {
     const experienceEntry = document.createElement("div");
     experienceEntry.innerHTML = `
-      <div><strong> ${companyName}</strong></div>
-
-      <div><strong>${startDate} - ${endDate}</strong> </div>
-      <div> ${description}</div>
+      <div><strong>${experience.companyName}</strong></div>
+      <div><strong>${experience.startDate} - ${experience.endDate}</strong></div>
+      <div>${experience.description}</div>
     `;
     experienceEntries.appendChild(experienceEntry);
-
-    experienceForm.reset();
-    experienceForm.style.display = "none";
   });
+}
 
+addExperienceButton.addEventListener("click", () => {
+  experienceForm.style.display = "flex";
+});
+
+saveExperienceButton.addEventListener("click", () => {
+  const companyName = document.getElementById("companyName").value;
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
+  const description = document.getElementById("description").value;
+
+  if (
+    companyName === "" ||
+    startDate === "" ||
+    endDate === "" ||
+    description === ""
+  ) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const experienceEntry = {
+    companyName,
+    startDate,
+    endDate,
+    description,
+  };
+
+  experienceData.push(experienceEntry);
+  saveToLocalStorage();
+
+  experienceForm.reset();
+  experienceForm.style.display = "none";
+});
+
+displayExperienceData();
