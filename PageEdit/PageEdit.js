@@ -3,6 +3,7 @@ const LINK_TO_PORTFOLIOPAGE = "../Portfolio/Portfolio.html";
 function redirectToPortfolioPage() {
   window.location.href = LINK_TO_PORTFOLIOPAGE;
 }
+// Am I doing it right?
 
 const addExperienceButton = document.getElementById("addExperienceButton");
 const experienceForm = document.getElementById("experienceForm");
