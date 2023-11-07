@@ -16,17 +16,15 @@ function saveToLocalStorage() {
 }
 
 function displayExperienceData() {
-  experienceEntries.innerHTML = '';
-  experienceData.forEach((experience, index) => {
+  experienceEntries.innerHTML = "";
+  experienceData.map((experience, index) => {
     const experienceEntry = document.createElement("div");
     experienceEntry.innerHTML = `
+      <button class="edit-button" data-index="${index}">Edit</button>
+      <button class="delete-button" data-index="${index}">Delete</button>
       <div><strong>${experience.companyName}</strong></div>
       <div><strong>${experience.startDate} - ${experience.endDate}</strong></div>
       <div>${experience.description}</div>
-      <div>
-        <button class="delete-button" data-index="${index}">Delete</button>
-        <button class="edit-button" data-index="${index}">Edit</button>
-      </div>
     `;
     experienceEntries.appendChild(experienceEntry);
 
@@ -46,22 +44,32 @@ function deleteExperience(index) {
 
 function showEditForm(index) {
   const experienceEntry = experienceData[index];
-  document.getElementById("companyName").value = experienceEntry.companyName;
-  document.getElementById("startDate").value = experienceEntry.startDate;
-  document.getElementById("endDate").value = experienceEntry.endDate;
-  document.getElementById("description").value = experienceEntry.description;
+  const editForm = document.createElement("form");
+  editForm.innerHTML = `
+    <div class="addDetails">
+      <div class="companyNameAndDates">
+        <input type="text" id="editCompanyName" value="${experienceEntry.companyName}" placeholder="Company"/>
+        <input type="date" id="editStartDate" value="${experienceEntry.startDate}" placeholder="Start date"/>
+        <input type="date" id="editEndDate" value="${experienceEntry.endDate}" placeholder="End date"/>
+      </div>
+      <div class="descriptionAndButton">
+        <textarea id="editDescription" rows="4" style="width: 85%">${experienceEntry.description}</textarea>
+        <button id="saveEditButton">Update</button>
+      </div>
+    </div>
+  `;
 
-  saveExperienceButton.removeEventListener("click", saveNewExperience);
-  saveExperienceButton.addEventListener("click", () => saveEditedExperience(index));
+  const saveEditButton = editForm.querySelector("#saveEditButton");
+  saveEditButton.addEventListener("click", () => saveEditedExperience(index));
 
-  experienceForm.style.display = "flex";
+  experienceEntries.replaceChild(editForm, experienceEntries.childNodes[index]);
 }
 
 function saveEditedExperience(index) {
-  const companyName = document.getElementById("companyName").value;
-  const startDate = document.getElementById("startDate").value;
-  const endDate = document.getElementById("endDate").value;
-  const description = document.getElementById("description").value;
+  const companyName = document.getElementById("editCompanyName").value;
+  const startDate = document.getElementById("editStartDate").value;
+  const endDate = document.getElementById("editEndDate").value;
+  const description = document.getElementById("editDescription").value;
 
   if (
     companyName === "" ||
@@ -82,15 +90,14 @@ function saveEditedExperience(index) {
 
   experienceData[index] = experienceEntry;
   saveToLocalStorage();
-  experienceForm.style.display = "none";
   displayExperienceData();
 }
 
 addExperienceButton.addEventListener("click", () => {
   experienceForm.reset();
+  experienceForm.style.display = "flex";
   saveExperienceButton.removeEventListener("click", saveEditedExperience);
   saveExperienceButton.addEventListener("click", saveNewExperience);
-  experienceForm.style.display = "flex";
 });
 
 function saveNewExperience() {
@@ -118,11 +125,9 @@ function saveNewExperience() {
 
   experienceData.push(experienceEntry);
   saveToLocalStorage();
-
   experienceForm.reset();
   experienceForm.style.display = "none";
   displayExperienceData();
 }
 
 displayExperienceData();
-
