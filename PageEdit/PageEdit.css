@@ -106,12 +106,16 @@
             }
           }
   
-         
-  
           .description {
             display: flex;
             align-items: center;
             justify-content: center;
+          }
+
+          .inputField {
+            height: 30px;
+            width: 200px;
+            margin: 10px;
           }
         }
       }

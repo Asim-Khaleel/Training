@@ -3,7 +3,6 @@ const LINK_TO_PORTFOLIOPAGE = "../Portfolio/Portfolio.html";
 function redirectToPortfolioPage() {
   window.location.href = LINK_TO_PORTFOLIOPAGE;
 }
-// Am I doing it right?
 
 const addExperienceButton = document.getElementById("addExperienceButton");
 const experienceForm = document.getElementById("experienceForm");
@@ -16,9 +15,25 @@ function saveToLocalStorage() {
   localStorage.setItem("experienceData", JSON.stringify(experienceData));
 }
 
-function displayExperienceData() {
+// Add the following code after your existing code
+const companyFilterInput = document.getElementById("companyFilter");
+companyFilterInput.addEventListener("input", filterExperienceData);
+
+function filterExperienceData() {
+  const filterText = companyFilterInput.value.toLowerCase();
+  const filteredData = experienceData.filter((experience) => {
+    return experience.companyName.toLowerCase().includes(filterText);
+  });
+  displayExperienceData(filteredData);
+}
+
+// Modify the displayExperienceData function to accept a filteredData parameter
+function displayExperienceData(filteredData) {
   experienceEntries.innerHTML = "";
-  experienceData.map((experience, index) => {
+
+  const dataToDisplay = filteredData || experienceData; // Use the filtered data if available
+
+  dataToDisplay.map((experience, index) => {
     const experienceEntry = document.createElement("div");
     experienceEntry.innerHTML = `
       <button class="edit-button" data-index="${index}">Edit</button>
@@ -36,6 +51,7 @@ function displayExperienceData() {
     editButton.addEventListener("click", () => showEditForm(index));
   });
 }
+
 
 function deleteExperience(index) {
   experienceData.splice(index, 1);
