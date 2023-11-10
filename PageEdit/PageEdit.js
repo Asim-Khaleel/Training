@@ -15,7 +15,6 @@ function saveToLocalStorage() {
   localStorage.setItem("experienceData", JSON.stringify(experienceData));
 }
 
-// Add the following code after your existing code
 const companyFilterInput = document.getElementById("companyFilter");
 companyFilterInput.addEventListener("input", filterExperienceData);
 
@@ -27,11 +26,10 @@ function filterExperienceData() {
   displayExperienceData(filteredData);
 }
 
-// Modify the displayExperienceData function to accept a filteredData parameter
 function displayExperienceData(filteredData) {
   experienceEntries.innerHTML = "";
 
-  const dataToDisplay = filteredData || experienceData; // Use the filtered data if available
+  const dataToDisplay = filteredData || experienceData;
 
   dataToDisplay.map((experience, index) => {
     const experienceEntry = document.createElement("div");
