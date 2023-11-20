@@ -1,5 +1,6 @@
 const LINK_TO_SIGNUPPAGE = "../Signup/Signup.html";
 const LINK_TO_EDITPAGE = "../PageEdit/PageEdit.html";
+const LINK_TO_DATAVIEWPAGE = "../DataView/DataView.html"
 
 function redirectToSignupPage() {
   window.location.href = LINK_TO_SIGNUPPAGE;
@@ -7,6 +8,10 @@ function redirectToSignupPage() {
 
 function redirectToEditPage() {
   window.location.href = LINK_TO_EDITPAGE;
+}
+
+function redirectToGetDataPage() {
+  window.location.href = LINK_TO_DATAVIEWPAGE;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
