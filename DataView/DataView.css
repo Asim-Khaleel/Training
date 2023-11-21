@@ -1,0 +1,65 @@
+.dataViewPage {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    font-family: sans-serif;
+}
+
+.backButtonContainer {
+    display: flex;
+    height: 40px;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid #c1c1c1;
+}
+
+.backButtonContainer:hover {
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
+}
+
+.buttonText {
+    font-weight: 800;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.dataSection {
+    height: 80vh;
+    overflow: auto;
+}
+
+
+.dataSection table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.dataSection table th,
+.dataSection table td {
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    text-align: left;
+    height: 20px;
+}
+
+.dataSection table th {
+    background-color: navy;
+    font-weight: bold;
+    color: #fff;
+    position: sticky;
+    top: 0; 
+    z-index: 1; 
+}
+
+.dataSection table td {
+    color: #555;
+}
+
+.dataSection table tbody tr:hover {
+    background-color: #f0f0f0;
+}
