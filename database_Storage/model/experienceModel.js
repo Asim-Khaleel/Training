@@ -20,9 +20,7 @@ const experienceSchema = mongoose.Schema(
       required: [true, 'Please add a password'],
     },
   },
-  {
-    timestamps: true,
-  }
+  
 )
 
 module.exports = mongoose.model('Experience', experienceSchema)
