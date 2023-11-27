@@ -17,7 +17,7 @@ const experienceSchema = mongoose.Schema(
       },
     description: {
       type: String,
-      required: [true, 'Please add a password'],
+      required: [true, 'Please add a description'],
     },
   },
   

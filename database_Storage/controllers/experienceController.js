@@ -43,13 +43,14 @@ const deleteExperience = asyncHandler(async (req, res) => {
   const experience = await Experience.findById(req.params.id);
 
   if (experience) {
-    await experience.remove();
+    await experience.deleteOne();
     res.json({ message: `Experience deleted at ${req.params.id}` });
   } else {
     res.status(404);
     throw new Error('Experience not found');
   }
 });
+
 
 module.exports = {
   getExperience,

@@ -1,69 +1,112 @@
+const API_URL = "http://localhost:5000/api/portfolio/experience";
+const addExperienceButton = document.getElementById("addExperienceButton");
+const experienceForm = document.getElementById("experienceForm");
+const saveExperienceButton = document.getElementById("saveExperienceButton");
+const experienceEntries = document.getElementById("experienceEntries");
 const LINK_TO_PORTFOLIOPAGE = "../Portfolio/Portfolio.html";
 
 function redirectToPortfolioPage() {
   window.location.href = LINK_TO_PORTFOLIOPAGE;
 }
 
-const addExperienceButton = document.getElementById("addExperienceButton");
-const experienceForm = document.getElementById("experienceForm");
-const saveExperienceButton = document.getElementById("saveExperienceButton");
-const experienceEntries = document.getElementById("experienceEntries");
-
-let experienceData = JSON.parse(localStorage.getItem("experienceData")) || [];
-
-function saveToLocalStorage() {
-  localStorage.setItem("experienceData", JSON.stringify(experienceData));
+async function fetchExperienceData() {
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    experienceData = data || [];
+    displayExperienceData();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 }
 
-const companyFilterInput = document.getElementById("companyFilter");
-companyFilterInput.addEventListener("input", filterExperienceData);
+async function addExperienceEntry(entry) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(entry),
+    });
+    const data = await response.json();
+    experienceData.push(data);
+    displayExperienceData();
+  } catch (error) {
+    console.error("Error adding experience entry:", error);
+  }
+}
 
-function filterExperienceData() {
-  const filterText = companyFilterInput.value.toLowerCase();
-  const filteredData = experienceData.filter((experience) => {
-    return experience.companyName.toLowerCase().includes(filterText);
-  });
-  displayExperienceData(filteredData);
+async function updateExperienceEntry(_id, entry) {
+  try {
+    const response = await fetch(`${API_URL}/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(entry),
+    });
+    const data = await response.json();
+    const updatedIndex = experienceData.findIndex((item) => item._id === _id);
+    experienceData[updatedIndex] = data;
+    displayExperienceData();
+  } catch (error) {
+    console.error("Error updating experience entry:", error);
+  }
+}
+
+async function deleteExperienceEntry(_id) {
+  try {
+    await fetch(`${API_URL}/${_id}`, {
+      method: "DELETE",
+    });
+
+    experienceData = experienceData.filter((item) => item._id !== _id);
+    const elementToRemove = experienceEntries.querySelector(
+      `[data-id="${_id}"]`
+    );
+    if (elementToRemove) {
+      elementToRemove.remove();
+    }
+  } catch (error) {
+    console.error("Error deleting experience entry:", error);
+  }
+  displayExperienceData();
 }
 
 function displayExperienceData(filteredData) {
   experienceEntries.innerHTML = "";
-
   const dataToDisplay = filteredData || experienceData;
-
-  dataToDisplay.map((experience, index) => {
+  dataToDisplay.map((experience, _id) => {
     const experienceEntry = document.createElement("div");
+    experienceEntry.setAttribute("data-id", experience._id);
     experienceEntry.innerHTML = `
-      <button class="edit-button" data-index="${index}">Edit</button>
-      <button class="delete-button" data-index="${index}">Delete</button>
-      <div><strong>${experience.companyName}</strong></div>
-      <div><strong>${experience.startDate} - ${experience.endDate}</strong></div>
-      <div>${experience.description}</div>
-    `;
+  <button class="edit-button" data-id="${experience._id}">Edit</button>
+  <button class="delete-button" data-id="${experience._id}">Delete</button>
+  <div><strong>${experience.company}</strong></div>
+  <div><strong>${experience.startDate} - ${experience.endDate}</strong></div>
+  <div>${experience.description}</div>
+`;
+
     experienceEntries.appendChild(experienceEntry);
 
     const deleteButton = experienceEntry.querySelector(".delete-button");
-    deleteButton.addEventListener("click", () => deleteExperience(index));
+    deleteButton.addEventListener("click", () =>
+      deleteExperienceEntry(experience._id)
+    );
 
     const editButton = experienceEntry.querySelector(".edit-button");
-    editButton.addEventListener("click", () => showEditForm(index));
+    editButton.addEventListener("click", () => showEditForm(experience._id));
   });
 }
 
-
-function deleteExperience(index) {
-  experienceData.splice(index, 1);
-  saveToLocalStorage();
-  displayExperienceData();
-}
-
-function showEditForm(index) {
-  const experienceEntry = experienceData[index];
+function showEditForm(_id) {
+  const experienceEntry = experienceData.find((entry) => entry._id === _id);
   const editForm = document.createElement("form");
   editForm.innerHTML = `
     <div class="addDetails">
       <div class="companyNameAndDates">
-        <input type="text" id="editCompanyName" value="${experienceEntry.companyName}" placeholder="Company"/>
+        <input type="text" id="editCompanyName" value="${experienceEntry.company}" placeholder="Company"/>
         <input type="date" id="editStartDate" value="${experienceEntry.startDate}" placeholder="Start date"/>
         <input type="date" id="editEndDate" value="${experienceEntry.endDate}" placeholder="End date"/>
       </div>
@@ -75,19 +118,24 @@ function showEditForm(index) {
   `;
 
   const saveEditButton = editForm.querySelector("#saveEditButton");
-  saveEditButton.addEventListener("click", () => saveEditedExperience(index));
+  saveEditButton.addEventListener("click", () => saveEditedExperience(_id));
 
-  experienceEntries.replaceChild(editForm, experienceEntries.childNodes[index]);
+  const existingEntry = experienceEntries.querySelector(`[data-id="${_id}"]`);
+
+  if (existingEntry) {
+    existingEntry.innerHTML = "";
+    existingEntry.appendChild(editForm);
+  }
 }
 
-function saveEditedExperience(index) {
-  const companyName = document.getElementById("editCompanyName").value;
+function saveEditedExperience(_id) {
+  const company = document.getElementById("editCompanyName").value;
   const startDate = document.getElementById("editStartDate").value;
   const endDate = document.getElementById("editEndDate").value;
   const description = document.getElementById("editDescription").value;
 
   if (
-    companyName === "" ||
+    company === "" ||
     startDate === "" ||
     endDate === "" ||
     description === ""
@@ -97,15 +145,43 @@ function saveEditedExperience(index) {
   }
 
   const experienceEntry = {
-    companyName,
+    company,
     startDate,
     endDate,
     description,
   };
 
-  experienceData[index] = experienceEntry;
-  saveToLocalStorage();
-  displayExperienceData();
+  updateExperienceEntry(_id, experienceEntry);
+  fetchExperienceData();
+}
+
+function saveNewExperience() {
+  const company = document.getElementById("companyName").value;
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
+  const description = document.getElementById("description").value;
+
+  if (
+    company === "" ||
+    startDate === "" ||
+    endDate === "" ||
+    description === ""
+  ) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const experienceEntry = {
+    company,
+    startDate,
+    endDate,
+    description,
+  };
+
+  addExperienceEntry(experienceEntry);
+
+  experienceForm.reset();
+  experienceForm.style.display = "none";
 }
 
 addExperienceButton.addEventListener("click", () => {
@@ -115,34 +191,4 @@ addExperienceButton.addEventListener("click", () => {
   saveExperienceButton.addEventListener("click", saveNewExperience);
 });
 
-function saveNewExperience() {
-  const companyName = document.getElementById("companyName").value;
-  const startDate = document.getElementById("startDate").value;
-  const endDate = document.getElementById("endDate").value;
-  const description = document.getElementById("description").value;
-
-  if (
-    companyName === "" ||
-    startDate === "" ||
-    endDate === "" ||
-    description === ""
-  ) {
-    alert("Please fill in all fields.");
-    return;
-  }
-
-  const experienceEntry = {
-    companyName,
-    startDate,
-    endDate,
-    description,
-  };
-
-  experienceData.push(experienceEntry);
-  saveToLocalStorage();
-  experienceForm.reset();
-  experienceForm.style.display = "none";
-  displayExperienceData();
-}
-
-displayExperienceData();
+fetchExperienceData();
