@@ -9,15 +9,76 @@ function redirectToPortfolioPage() {
   window.location.href = LINK_TO_PORTFOLIOPAGE;
 }
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 async function fetchExperienceData() {
   try {
+    showLoader();
     const response = await fetch(API_URL);
     const data = await response.json();
     experienceData = data || [];
     displayExperienceData();
+    hideLoader();
   } catch (error) {
+    hideLoader();
     console.error("Error fetching data:", error);
+    showFetchErrorMessage(); // Show error message
   }
+
+  if (experienceData.length === 0) {
+    showNoDataMessage();
+  } else {
+    hideNoDataMessage();
+  }
+}
+
+function showFetchErrorMessage() {
+  const errorMessageContainer = document.getElementById("fetchErrorMessage");
+  if (errorMessageContainer) {
+    errorMessageContainer.style.display = "block";
+  }
+}
+
+
+// async function fetchExperienceData() {
+//   try {
+//     showLoader();
+//     const response = await fetch(API_URL);
+//     const data = await response.json();
+//     experienceData = data || [];
+//     displayExperienceData();
+//     hideLoader();
+//   } catch (error) {
+//     hideLoader();
+//     console.error("Error fetching data:", error);
+//   }
+
+//   if (experienceData.length === 0) {
+//     showNoDataMessage();
+//   } else {
+//     hideNoDataMessage();
+//   }
+// }
+function showLoader() {
+  document.getElementById("loader").style.display = "block";
+}
+
+function hideLoader() {
+  document.getElementById("loader").style.display = "none";
+}
+
+function showNoDataMessage() {
+  document.getElementById("noDataMessage").style.display = "block";
+}
+
+function hideNoDataMessage() {
+  document.getElementById("noDataMessage").style.display = "none";
 }
 
 async function addExperienceEntry(entry) {
@@ -74,17 +135,18 @@ async function deleteExperienceEntry(_id) {
   displayExperienceData();
 }
 
-function displayExperienceData(filteredData) {
+function displayExperienceData() {
   experienceEntries.innerHTML = "";
-  const dataToDisplay = filteredData || experienceData;
-  dataToDisplay.map((experience, _id) => {
+  experienceData.map((experience, _id) => {
     const experienceEntry = document.createElement("div");
     experienceEntry.setAttribute("data-id", experience._id);
     experienceEntry.innerHTML = `
   <button class="edit-button" data-id="${experience._id}">Edit</button>
   <button class="delete-button" data-id="${experience._id}">Delete</button>
   <div><strong>${experience.company}</strong></div>
-  <div><strong>${experience.startDate} - ${experience.endDate}</strong></div>
+  <div><strong>${formatDate(experience.startDate)} - ${formatDate(
+      experience.endDate
+    )}</strong></div>
   <div>${experience.description}</div>
 `;
 
@@ -106,12 +168,20 @@ function showEditForm(_id) {
   editForm.innerHTML = `
     <div class="addDetails">
       <div class="companyNameAndDates">
-        <input type="text" id="editCompanyName" value="${experienceEntry.company}" placeholder="Company"/>
-        <input type="date" id="editStartDate" value="${experienceEntry.startDate}" placeholder="Start date"/>
-        <input type="date" id="editEndDate" value="${experienceEntry.endDate}" placeholder="End date"/>
+        <input type="text" id="editCompanyName" value="${
+          experienceEntry.company
+        }" placeholder="Company"/>
+        <input type="date" id="editStartDate" value="${formatDate(
+          experienceEntry.startDate
+        )}" placeholder="Start date"/>
+        <input type="date" id="editEndDate" value="${formatDate(
+          experienceEntry.endDate
+        )}" placeholder="End date"/>
       </div>
       <div class="descriptionAndButton">
-        <textarea id="editDescription" rows="4" style="width: 85%">${experienceEntry.description}</textarea>
+        <textarea id="editDescription" rows="4" style="width: 85%">${
+          experienceEntry.description
+        }</textarea>
         <button id="saveEditButton">Update</button>
       </div>
     </div>
@@ -128,21 +198,11 @@ function showEditForm(_id) {
   }
 }
 
-function saveEditedExperience(_id) {
+async function saveEditedExperience(_id) {
   const company = document.getElementById("editCompanyName").value;
   const startDate = document.getElementById("editStartDate").value;
   const endDate = document.getElementById("editEndDate").value;
   const description = document.getElementById("editDescription").value;
-
-  if (
-    company === "" ||
-    startDate === "" ||
-    endDate === "" ||
-    description === ""
-  ) {
-    alert("Please fill in all fields.");
-    return;
-  }
 
   const experienceEntry = {
     company,
@@ -151,9 +211,14 @@ function saveEditedExperience(_id) {
     description,
   };
 
-  updateExperienceEntry(_id, experienceEntry);
-  fetchExperienceData();
+  await updateExperienceEntry(_id, experienceEntry);
+
+  const updatedIndex = experienceData.findIndex((item) => item._id === _id);
+  experienceData[updatedIndex] = { _id, ...experienceEntry };
+
+  displayExperienceData();
 }
+
 
 function saveNewExperience() {
   const company = document.getElementById("companyName").value;
@@ -168,7 +233,6 @@ function saveNewExperience() {
     description === ""
   ) {
     alert("Please fill in all fields.");
-    return;
   }
 
   const experienceEntry = {

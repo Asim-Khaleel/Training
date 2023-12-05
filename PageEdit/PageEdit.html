@@ -1,92 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Edit Info</title>
-    <link rel="stylesheet" type="text/css" href="PageEdit.css" />
-  </head>
 
-  <body>
-    <div class="informationContainer">
-      <header class="backButtonContainer">
-        <nav>
-          <button class="buttonText" onclick="redirectToPortfolioPage()">
-            Go back
-          </button>
-        </nav>
-      </header>
-      <main class="informationBody">
-        <section class="aboutAndExperience">
-          <article class="about">
-            <span class="headerText">About</span>
-            <p class="description">
-              Having seen the IT industry grow exponentially, I could not help
-              myself but jump into the industry as a trainee and there was no
-              going back. I have worked as a content writer, data science
-              engineer, and in other major areas, and then I tried digging deep
-              into frontend development. I am very good at Reactjs, Typescript,
-              and JavaScript.
-            </p>
-          </article>
-          <article class="experience">
-            <div class="textAndButtonContainer">
-              <span class="headerText">Experience</span>
-              <input class="inputField" type="text" id="companyFilter" placeholder="Search company by name" />
-              <button id="addExperienceButton">Add</button>
-            </div>
-            <form id="experienceForm" style="display: none">
-              <div class="addDetails">
-                <span class="headerText">Add Experience</span>
-                <div class="companyNameAndDates">
-                  <input type="text" id="companyName" placeholder="Company" />
-                  <input type="date" id="startDate" placeholder="Start date" />
-                  <input type="date" id="endDate" placeholder="End date" />
-                </div>
-                <div class="descriptionAndButton">
-                  <textarea
-                    id="description"
-                    rows="4"
-                    style="width: 85%"
-                  ></textarea>
-                  <button id="saveExperienceButton">Save</button>
-                </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Info</title>
+  <link rel="stylesheet" type="text/css" href="PageEdit.css" />
+</head>
+
+<body>
+  <div class="informationContainer">
+    <header class="backButtonContainer">
+      <nav>
+        <button class="buttonText" onclick="redirectToPortfolioPage()">
+          Go back
+        </button>
+      </nav>
+    </header>
+    <main class="informationBody">
+      <section class="aboutAndExperience">
+        <article class="about">
+          <span class="headerText">About</span>
+          <p class="description">
+            Having seen the IT industry grow exponentially, I could not help
+            myself but jump into the industry as a trainee and there was no
+            going back. I have worked as a content writer, data science
+            engineer, and in other major areas, and then I tried digging deep
+            into frontend development. I am very good at Reactjs, Typescript,
+            and JavaScript.
+          </p>
+        </article>
+        <article class="experience">
+          <div class="textAndButtonContainer">
+            <span class="headerText">Experience</span>
+            <button id="addExperienceButton">Add</button>
+          </div>
+          <div id="noDataMessage" class="noDataMessage">
+            No data available please go ahead and add some experiences
+          </div>
+          <div id="fetchErrorMessage" class="fetchErrorMessage" style="display: none">
+            Error fetching data. Please try again later.
+          </div>
+          <div id="loader" class="loader"></div>
+          <form id="experienceForm" style="display: none">
+            <div class="addDetails">
+              <span class="headerText">Add Experience</span>
+              <div class="companyNameAndDates">
+                <input type="text" id="companyName" placeholder="Company" />
+                <input type="date" id="startDate" placeholder="Start date" />
+                <input type="date" id="endDate" placeholder="End date" />
               </div>
-            </form>
-            
-            <div id="experienceEntries" class="addDetails"></div>
-          </article>
-        </section>
-        <aside class="profileSection">
-          <img
-            src="https://drive.google.com/uc?id=1yu8Q1ysY-PsMkvNQsasXp4F2Ie9dZp-Z"
-            alt="Profile Picture"
-            width="100"
-            height="100"
-            style="border-radius: 100px"
-          />
-          <div class="name">
-            <h3>Asim Khalil</h3>
-          </div>
-          <h2 class="skillsHeader">Skills</h2>
-          <div class="skills">
-            <ul>
-              <li>JavaScript</li>
-              <li>Reactjs</li>
-              <li>Typescript</li>
-              <li>EmberJs</li>
-            </ul>
-          </div>
-        </aside>
-      </main>
-      <footer>
-        <a
-          class="socialAccount"
-          href="https://www.linkedin.com/in/asim-khalil-37644a249?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BNi6sQbXXTPuPREv2mQ4oIQ%3D%3D"
-          target="_blank"
-          >@LinkedIn</a
-        >
-      </footer>
-    </div>
-    <script src="PageEdit.js"></script>
-  </body>
+              <div class="descriptionAndButton">
+                <textarea id="description" rows="4" style="width: 85%"></textarea>
+                <button id="saveExperienceButton">Save</button>
+              </div>
+            </div>
+          </form>
+          <div id="experienceEntries" class="addDetails"></div>
+        </article>
+      </section>
+      <aside class="profileSection">
+        <img src="https://drive.google.com/uc?id=1yu8Q1ysY-PsMkvNQsasXp4F2Ie9dZp-Z" alt="Profile Picture" width="100"
+          height="100" style="border-radius: 100px" />
+        <div class="name">
+          <h3>Asim Khalil</h3>
+        </div>
+        <h2 class="skillsHeader">Skills</h2>
+        <div class="skills">
+          <ul>
+            <li>JavaScript</li>
+            <li>Reactjs</li>
+            <li>Typescript</li>
+            <li>EmberJs</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+    <footer>
+      <a class="socialAccount"
+        href="https://www.linkedin.com/in/asim-khalil-37644a249?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BNi6sQbXXTPuPREv2mQ4oIQ%3D%3D"
+        target="_blank">@LinkedIn</a>
+    </footer>
+  </div>
+  <script src="PageEdit.js"></script>
+</body>
+
 </html>
