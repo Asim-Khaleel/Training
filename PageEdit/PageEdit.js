@@ -28,7 +28,7 @@ async function fetchExperienceData() {
   } catch (error) {
     hideLoader();
     console.error("Error fetching data:", error);
-    showFetchErrorMessage(); // Show error message
+    showFetchErrorMessage();
   }
 
   if (experienceData.length === 0) {
@@ -45,26 +45,6 @@ function showFetchErrorMessage() {
   }
 }
 
-
-// async function fetchExperienceData() {
-//   try {
-//     showLoader();
-//     const response = await fetch(API_URL);
-//     const data = await response.json();
-//     experienceData = data || [];
-//     displayExperienceData();
-//     hideLoader();
-//   } catch (error) {
-//     hideLoader();
-//     console.error("Error fetching data:", error);
-//   }
-
-//   if (experienceData.length === 0) {
-//     showNoDataMessage();
-//   } else {
-//     hideNoDataMessage();
-//   }
-// }
 function showLoader() {
   document.getElementById("loader").style.display = "block";
 }
@@ -218,7 +198,6 @@ async function saveEditedExperience(_id) {
 
   displayExperienceData();
 }
-
 
 function saveNewExperience() {
   const company = document.getElementById("companyName").value;

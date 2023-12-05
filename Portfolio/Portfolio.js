@@ -1,6 +1,6 @@
 const LINK_TO_SIGNUPPAGE = "../Signup/Signup.html";
 const LINK_TO_EDITPAGE = "../PageEdit/PageEdit.html";
-const LINK_TO_DATAVIEWPAGE = "../DataView/DataView.html"
+const LINK_TO_DATAVIEWPAGE = "../DataView/DataView.html";
 const API_URL = "http://localhost:5000/api/portfolio/experience";
 
 function redirectToSignupPage() {
@@ -23,7 +23,6 @@ function formatDate(dateString) {
   return `${year}-${month}-${day}`;
 }
 
-
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     const response = await fetch(API_URL);
@@ -41,7 +40,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         experienceEntry.style.margin = "10px";
         experienceEntry.innerHTML = `
           <div><strong>${experience.company}</strong></div>
-          <div><strong>${formatDate(experience.startDate)} - ${formatDate(experience.endDate)}</strong></div>
+          <div><strong>${formatDate(experience.startDate)} - ${formatDate(
+          experience.endDate
+        )}</strong></div>
           <div>${experience.description}</div>
         `;
         experienceElement.appendChild(experienceEntry);
@@ -51,4 +52,3 @@ document.addEventListener("DOMContentLoaded", async function () {
     console.error("Error fetching data:", error);
   }
 });
-
