@@ -184,6 +184,16 @@ async function saveEditedExperience(_id) {
   const endDate = document.getElementById("editEndDate").value;
   const description = document.getElementById("editDescription").value;
 
+  if (
+    company === "" ||
+    startDate === "" ||
+    endDate === "" ||
+    description === ""
+  ) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
   const experienceEntry = {
     company,
     startDate,
