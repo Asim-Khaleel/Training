@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const Experience = require('../model/experienceModel');
 
 const getExperience = asyncHandler(async (req, res) => {
-  const experiences = await Experience.find();
+  const experiences = await Experience.find({});
   res.json(experiences);
 });
 

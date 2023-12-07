@@ -191,15 +191,6 @@
   }
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .loader {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #3498db;
@@ -209,4 +200,13 @@
   animation: spin 1s linear infinite;
   margin: auto;
   display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
