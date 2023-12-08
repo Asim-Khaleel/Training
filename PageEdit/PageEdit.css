@@ -1,177 +1,212 @@
 .informationContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+  font-family: sans-serif;
+  color: black;
+
+  .backButtonContainer {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
+    height: 40px;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid #c1c1c1;
+
+    &:hover {
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
+    }
+
+    .buttonText {
+      font-weight: 800;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .informationBody {
+    display: flex;
     gap: 10px;
-    font-family: sans-serif;
-    color: black;
-  
-    .backButtonContainer {
+
+    .aboutAndExperience {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 85%;
+
+      .about {
         display: flex;
-        height: 40px;
-        align-items: center;
-        border-radius: 4px;
+        flex-direction: column;
+        height: 140px;
+        border-radius: 2px;
+        padding: 8px;
         border: 1px solid #c1c1c1;
-    
+
         &:hover {
           box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
         }
-    
-        .buttonText {
-          font-weight: 800;
-          margin-left: 20px;
-          cursor: pointer;
+
+        .headerText {
+          margin-left: 10px;
+          font-size: 18px;
+          font-weight: 700;
+        }
+
+        .description {
+          margin-left: 10px;
+          font-size: 18px;
+          margin-top: 10px;
+          overflow-y: auto;
         }
       }
 
-    .informationBody {
-      display: flex;
-      gap: 10px;
-  
-      .aboutAndExperience {
+      .experience {
         display: flex;
+        height: 280px;
         flex-direction: column;
-        gap: 10px;
-        width: 85%;
-  
-        .about {
+        padding: 8px;
+        border-radius: 2px;
+        border: 1px solid #c1c1c1;
+        overflow-y: auto;
+
+        &:hover {
+          box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
+        }
+
+        .noDataMessage {
+          text-align: center;
+          font-size: 18px;
+          color: #777;
+          display: none;
+        }
+
+        .fetchErrorMessage {
+          text-align: center;
+          font-size: 18px;
+          color: #777;
+          display: none;
+        }
+
+        .textAndButtonContainer {
           display: flex;
-          flex-direction: column;
-          height: 140px;
-          border-radius: 2px;
-          padding: 8px;
-          border: 1px solid #c1c1c1;
-  
-          &:hover {
-            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
-          }
-  
+          width: 100%;
+          justify-content: space-between;
+          align-items: center;
+          height: 30px;
+          margin-bottom: 10px;
+
           .headerText {
             margin-left: 10px;
             font-size: 18px;
             font-weight: 700;
           }
-  
-          .description {
-            margin-left: 10px;
-            font-size: 18px;
-            margin-top: 10px;
-            overflow-y: auto;
+        }
+
+        .addDetails {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-left: 10px;
+
+          .companyNameAndDates {
+            display: flex;
+            gap: 10px;
+          }
+          .descriptionAndButton {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            width: 80%;
+            flex-grow: 1;
           }
         }
-  
-        .experience {
+
+        .description {
           display: flex;
-          height: 280px;
-          flex-direction: column;
-          padding: 8px;
-          border-radius: 2px;
-          border: 1px solid #c1c1c1;
-          overflow-y: auto;
-  
-          &:hover {
-            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
-          }
-          
-          .textAndButtonContainer {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            align-items: center;
-            height: 30px;
+          align-items: center;
+          justify-content: center;
+        }
 
-            .headerText {
-              margin-left: 10px;
-              font-size: 18px;
-              font-weight: 700;
-            }
-          }
-
-          .addDetails {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-left: 10px;
-
-            .companyNameAndDates {
-              display: flex;
-              gap: 10px;
-            }
-            .descriptionAndButton {
-              display: flex;
-              gap: 10px;
-              align-items: flex-end;
-              width: 80%;
-              flex-grow: 1;
-            }
-          }
-  
-          .description {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .inputField {
-            height: 30px;
-            width: 200px;
-            margin: 10px;
-          }
+        .inputField {
+          height: 20px;
+          width: 200px;
+          margin: 10px;
         }
       }
-      .profileSection {
+    }
+    .profileSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 8px;
+      width: 20%;
+      border-radius: 2px;
+      border: 1px solid #c1c1c1;
+
+      .name {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 10px;
-        padding: 15px 8px;
-        width: 20%;
-        border-radius: 2px;
-        border: 1px solid #c1c1c1;
-  
-        .name {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-          font-weight: 700;
-          font-size: 20px;
-        }
-  
-        .skillsHeader {
-          display: flex;
-          align-items: flex-start;
-          font-weight: 700;
-          width: 100%;
-          font-size: 20px;
-        }
-        .skills {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          gap: 5px;
-          font-weight: 500;
-          padding: 8px;
-          font-size: 15px;
-        }
-  
-        &:hover {
-          box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
-        }
+        font-weight: 700;
+        font-size: 20px;
       }
-    }
-  
-    .socialAccount {
-      display: flex;
-      justify-content: center;
-      height: 40px;
-      align-items: center;
-      font-weight: 800;
-      border-radius: 4px;
-      border: 1px solid #c1c1c1;
-  
+
+      .skillsHeader {
+        display: flex;
+        align-items: flex-start;
+        font-weight: 700;
+        width: 100%;
+        font-size: 20px;
+      }
+      .skills {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+        font-weight: 500;
+        padding: 8px;
+        font-size: 15px;
+      }
+
       &:hover {
         box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
       }
     }
   }
+
+  .socialAccount {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    align-items: center;
+    font-weight: 800;
+    border-radius: 4px;
+    border: 1px solid #c1c1c1;
+
+    &:hover {
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
+    }
+  }
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+  display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
